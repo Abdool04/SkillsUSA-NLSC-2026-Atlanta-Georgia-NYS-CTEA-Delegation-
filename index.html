@@ -595,6 +595,66 @@
   }
   .active-role-pill:hover { background: rgba(255,255,255,0.22); }
   .active-role-pill.visible { display: inline-flex; }
+
+  /* ── ROOM ROWS ── */
+  .room-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    border-bottom: 1px solid #f3f4f6;
+  }
+  .room-row:last-child { border-bottom: none; }
+  .room-number {
+    font-size: 18px;
+    font-weight: 800;
+    color: #1a2d5a;
+    min-width: 48px;
+  }
+  .room-names { font-size: 13px; color: #374151; flex: 1; }
+
+  /* ── NIGHT TABS ── */
+  .night-tab {
+    background: rgba(255,255,255,0.15);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 6px;
+    padding: 5px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .night-tab:hover { background: rgba(255,255,255,0.25); }
+  .night-tab.active { background: white; color: #0d9488; }
+
+  /* ── CHECK ROWS ── */
+  .check-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #f3f4f6;
+    gap: 12px;
+  }
+  .check-row:last-child { border-bottom: none; }
+  .check-info { flex: 1; }
+  .check-room-num { font-weight: 700; font-size: 15px; color: #1a2d5a; }
+  .check-room-occ { font-size: 12px; color: #6b7280; margin-top: 1px; }
+  .check-timestamp { font-size: 11px; color: #6b7280; text-align: right; min-width: 90px; }
+  .check-btn {
+    border: none;
+    border-radius: 8px;
+    padding: 7px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s;
+  }
+  .check-btn.unchecked { background: #f3f4f6; color: #374151; border: 1px solid #e5e7eb; }
+  .check-btn.unchecked:hover { background: #dcfce7; color: #15803d; border-color: #bbf7d0; }
+  .check-btn.checked { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
 </style>
 </head>
 <body>
@@ -680,6 +740,59 @@
       <div class="alert-body">265 Peachtree Center Avenue, Atlanta, GA 30303 · <strong>404-521-0000</strong><br>Trip Coordinator: Matthew DiMella — mdimell@schools.nyc.gov</div>
     </div>
   </div>
+
+  <!-- ══ ROOM MANAGEMENT (ADVISOR ONLY) ══ -->
+  <div data-role="advisor">
+  <div class="section-title">🏨 Room Management</div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+    <div style="background:white;border-radius:12px;border:1px solid #e5e7eb;overflow:hidden;">
+      <div style="background:#1a2d5a;color:white;padding:12px 16px;font-weight:700;font-size:13px;">👦 Male Student Rooms</div>
+      <div>
+        <div class="room-row" data-room="3734"><div class="room-number">3734</div><div class="room-names">Nicholas R. &amp; Surpreet M.</div></div>
+        <div class="room-row" data-room="3733"><div class="room-number">3733</div><div class="room-names">Joshua R. &amp; Zakariya R.</div></div>
+        <div class="room-row" data-room="3735"><div class="room-number">3735</div><div class="room-names">Gurkirat S. &amp; Harmandeep S.</div></div>
+      </div>
+    </div>
+    <div style="background:white;border-radius:12px;border:1px solid #e5e7eb;overflow:hidden;">
+      <div style="background:#c8102e;color:white;padding:12px 16px;font-weight:700;font-size:13px;">👧 Female Student Rooms</div>
+      <div>
+        <div class="room-row" data-room="3730"><div class="room-number">3730</div><div class="room-names">Harneet K. &amp; Ekam D.</div></div>
+        <div class="room-row" data-room="3727"><div class="room-number">3727</div><div class="room-names">Jeriana G. &amp; Vidya M.</div></div>
+        <div class="room-row" data-room="3732"><div class="room-number">3732</div><div class="room-names">Kiera M. &amp; Atiya K.</div></div>
+        <div class="room-row" data-room="3729"><div class="room-number">3729</div><div class="room-names">Leanna F. &amp; Zaima U.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="background:white;border-radius:12px;border:1px solid #e5e7eb;overflow:hidden;margin-bottom:16px;">
+    <div style="background:#475569;color:white;padding:12px 16px;font-weight:700;font-size:13px;">👨‍🏫 Advisor Rooms</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);">
+      <div class="room-row" style="border-right:1px solid #e5e7eb;"><div class="room-number">3731</div><div class="room-names">Briiana</div></div>
+      <div class="room-row" style="border-right:1px solid #e5e7eb;"><div class="room-number">3725</div><div class="room-names">DiMella</div></div>
+      <div class="room-row"><div class="room-number">3728</div><div class="room-names">Hossain &amp; Gaffoor</div></div>
+    </div>
+  </div>
+
+  <div style="background:white;border-radius:12px;border:1px solid #e5e7eb;overflow:hidden;margin-bottom:16px;">
+    <div style="background:#0d9488;color:white;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+      <span style="font-weight:700;font-size:14px;">✅ Nightly Room Check — 11:00 PM Curfew</span>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;" id="nightTabs">
+        <button onclick="setNight('mon')" class="night-tab active" id="tab-mon">Mon 6/1</button>
+        <button onclick="setNight('tue')" class="night-tab" id="tab-tue">Tue 6/2</button>
+        <button onclick="setNight('wed')" class="night-tab" id="tab-wed">Wed 6/3</button>
+        <button onclick="setNight('thu')" class="night-tab" id="tab-thu">Thu 6/4</button>
+        <button onclick="setNight('fri')" class="night-tab" id="tab-fri">Fri 6/5</button>
+      </div>
+    </div>
+    <div style="padding:16px 20px;" id="roomCheckPanel"></div>
+    <div style="padding:0 20px 16px;display:flex;gap:10px;flex-wrap:wrap;">
+      <button onclick="checkAllRooms()" style="background:#0d9488;color:white;border:none;border-radius:8px;padding:9px 18px;font-size:13px;font-weight:600;cursor:pointer;">✅ Mark All Checked</button>
+      <button onclick="clearNight()" style="background:#f3f4f6;color:#374151;border:1px solid #e5e7eb;border-radius:8px;padding:9px 18px;font-size:13px;font-weight:600;cursor:pointer;">🗑️ Clear Night</button>
+    </div>
+  </div>
+
+  </div><!-- end advisor block -->
 
   <!-- ══ PAYMENTS ══ -->
   <div class="section-title">💳 Payments Due</div>
@@ -1314,7 +1427,8 @@ function applyRoleCSS(role) {
       show = (r !== 'advisor');
     }
     // advisor sees everything
-    el.style.display = show ? '' : 'none';
+    const isBlock = el.tagName === 'DIV' && !el.classList.contains('event-row');
+    el.style.display = show ? (isBlock ? 'block' : '') : 'none';
   });
 }
 
@@ -1340,6 +1454,96 @@ function switchRole() {
 
 const saved = sessionStorage.getItem('nlscRole');
 if (saved && roleLabels[saved]) selectRole(saved);
+
+// ── ROOM CHECK SYSTEM ──
+const ROOMS = [
+  { room: '3734', names: 'Nicholas R. & Surpreet M.', gender: 'male' },
+  { room: '3733', names: 'Joshua R. & Zakariya R.', gender: 'male' },
+  { room: '3735', names: 'Gurkirat S. & Harmandeep S.', gender: 'male' },
+  { room: '3730', names: 'Harneet K. & Ekam D.', gender: 'female' },
+  { room: '3727', names: 'Jeriana G. & Vidya M.', gender: 'female' },
+  { room: '3732', names: 'Kiera M. & Atiya K.', gender: 'female' },
+  { room: '3729', names: 'Leanna F. & Zaima U.', gender: 'female' },
+];
+const NIGHTS = { mon:'Mon Jun 1', tue:'Tue Jun 2', wed:'Wed Jun 3', thu:'Thu Jun 4', fri:'Fri Jun 5' };
+let currentNight = 'mon';
+
+function getChecks() {
+  try { return JSON.parse(localStorage.getItem('nlsc_roomchecks') || '{}'); }
+  catch(e) { return {}; }
+}
+function saveChecks(data) {
+  localStorage.setItem('nlsc_roomchecks', JSON.stringify(data));
+}
+
+function setNight(night) {
+  currentNight = night;
+  document.querySelectorAll('.night-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + night).classList.add('active');
+  renderCheckPanel();
+}
+
+function toggleCheck(room) {
+  const data = getChecks();
+  const key = currentNight + '_' + room;
+  if (data[key]) {
+    delete data[key];
+  } else {
+    const now = new Date();
+    data[key] = now.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+  }
+  saveChecks(data);
+  renderCheckPanel();
+}
+
+function checkAllRooms() {
+  const data = getChecks();
+  const now = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+  ROOMS.forEach(r => { data[currentNight + '_' + r.room] = now; });
+  saveChecks(data);
+  renderCheckPanel();
+}
+
+function clearNight() {
+  const data = getChecks();
+  ROOMS.forEach(r => { delete data[currentNight + '_' + r.room]; });
+  saveChecks(data);
+  renderCheckPanel();
+}
+
+function renderCheckPanel() {
+  const panel = document.getElementById('roomCheckPanel');
+  if (!panel) return;
+  const data = getChecks();
+  const checkedCount = ROOMS.filter(r => data[currentNight + '_' + r.room]).length;
+  let html = `<div style="font-size:12px;color:#6b7280;margin-bottom:12px;font-weight:600;">${NIGHTS[currentNight]} &nbsp;·&nbsp; ${checkedCount}/${ROOMS.length} rooms checked</div>`;
+  ROOMS.forEach(r => {
+    const key = currentNight + '_' + r.room;
+    const checked = !!data[key];
+    const time = data[key] || '';
+    const genderColor = r.gender === 'male' ? '#1a2d5a' : '#c8102e';
+    html += `<div class="check-row">
+      <div class="check-info">
+        <div class="check-room-num" style="color:${genderColor}">Room ${r.room}</div>
+        <div class="check-room-occ">${r.names}</div>
+      </div>
+      ${checked ? `<div class="check-timestamp">✅ ${time}</div>` : '<div class="check-timestamp"></div>'}
+      <button class="check-btn ${checked ? 'checked' : 'unchecked'}" onclick="toggleCheck('${r.room}')">
+        ${checked ? '✅ Checked' : 'Mark Checked'}
+      </button>
+    </div>`;
+  });
+  panel.innerHTML = html;
+}
+
+// Init room check panel after role is selected
+const _origSelectRole = selectRole;
+selectRole = function(role) {
+  _origSelectRole(role);
+  if (role === 'advisor') setTimeout(renderCheckPanel, 50);
+};
+// Also render if already advisor
+if (sessionStorage.getItem('nlscRole') === 'advisor') setTimeout(renderCheckPanel, 100);
 </script>
 </body>
 </html>
