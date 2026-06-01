@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NLSC 2026 — Atlanta Trip Guide</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+  :root {
+    --navy: #1a2d5a;
+    --red: #c8102e;
+    --gold: #f5a623;
+    --light-gold: #fef9ee;
+    --light-blue: #eef2fb;
+    --white: #ffffff;
+    --gray: #6b7280;
+    --light-gray: #f3f4f6;
+    --border: #e5e7eb;
+    --green: #16a34a;
+    --purple: #7c3aed;
+    --teal: #0d9488;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #f0f2f8;
+    color: #1f2937;
+    line-height: 1.6;
+    font-size: 14px;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: linear-gradient(135deg, var(--navy) 0%, #2a4080 60%, #1a3060 100%);
+    color: white;
+    padding: 40px 32px 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 240px; height: 240px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 50%;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 20%;
+    width: 160px; height: 160px;
+    background: rgba(200,16,46,0.15);
+    border-radius: 50%;
+  }
+  .header-inner { max-width: 900px; margin: 0 auto; position: relative; z-index: 1; }
+  .header-top { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
+  .skillsusa-badge {
+    background: var(--red);
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 4px;
+  }
+  .ctea-badge {
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 4px;
+  }
+  .header h1 {
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+  }
+  .header h1 span { color: var(--gold); }
+  .header-sub {
+    font-size: 15px;
+    color: rgba(255,255,255,0.75);
+    margin-top: 6px;
+  }
+  .header-meta {
+    display: flex;
+    gap: 24px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.85);
+  }
+  .meta-icon {
+    width: 28px; height: 28px;
+    background: rgba(255,255,255,0.12);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+  }
+
+  /* ── ALERTS / CALLOUTS ── */
+  .page { max-width: 900px; margin: 0 auto; padding: 28px 24px; }
+
+  .alert {
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    font-size: 13.5px;
+  }
+  .alert-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .alert-red { background: #fef2f2; border: 1px solid #fecaca; }
+  .alert-red .alert-title { color: var(--red); font-weight: 700; }
+  .alert-gold { background: var(--light-gold); border: 1px solid #fcd34d; }
+  .alert-gold .alert-title { color: #92400e; font-weight: 700; }
+  .alert-blue { background: var(--light-blue); border: 1px solid #bfdbfe; }
+  .alert-blue .alert-title { color: var(--navy); font-weight: 700; }
+  .alert-green { background: #f0fdf4; border: 1px solid #bbf7d0; }
+  .alert-green .alert-title { color: var(--green); font-weight: 700; }
+  .alert-content { flex: 1; }
+  .alert-body { color: #374151; margin-top: 2px; }
+
+  /* ── SECTION HEADINGS ── */
+  .section-title {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--gray);
+    margin: 32px 0 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── PAYMENTS BOX ── */
+  .payments-box {
+    background: white;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  .payments-header {
+    background: var(--navy);
+    color: white;
+    padding: 14px 20px;
+    font-weight: 700;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .payments-body { padding: 16px 20px; }
+  .payment-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13.5px;
+  }
+  .payment-row:last-of-type { border-bottom: none; }
+  .payment-label { color: #374151; }
+  .payment-amount { font-weight: 700; color: var(--navy); }
+  .payment-total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 2px solid var(--navy);
+  }
+  .payment-total-label { font-weight: 700; font-size: 15px; }
+  .payment-total-amount { font-weight: 800; font-size: 18px; color: var(--red); }
+  .payment-methods {
+    margin-top: 12px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .method-pill {
+    background: var(--light-blue);
+    color: var(--navy);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  /* ── FLIGHT CARDS ── */
+  .flights-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  @media(max-width: 600px) { .flights-grid { grid-template-columns: 1fr; } }
+  .flight-card {
+    background: white;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    padding: 16px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .flight-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .flight-card.outbound::before { background: var(--navy); }
+  .flight-card.return::before { background: var(--red); }
+  .flight-tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .flight-tag.out { color: var(--navy); }
+  .flight-tag.ret { color: var(--red); }
+  .flight-route {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .airport { font-size: 26px; font-weight: 800; color: var(--navy); }
+  .flight-arrow { color: var(--gray); font-size: 18px; }
+  .flight-detail { font-size: 12px; color: var(--gray); margin-top: 2px; }
+  .flight-times {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .time-block { text-align: center; }
+  .time-big { font-size: 17px; font-weight: 700; color: var(--navy); }
+  .time-label { font-size: 10px; color: var(--gray); text-transform: uppercase; letter-spacing: 0.5px; }
+  .flight-num { font-size: 11px; color: var(--gray); margin-top: 6px; }
+
+  /* ── TIMELINE ── */
+  .timeline { position: relative; }
+  .day-block {
+    background: white;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    margin-bottom: 16px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  }
+  .day-header {
+    padding: 14px 20px 12px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .day-header.navy { background: var(--navy); color: white; }
+  .day-header.red { background: var(--red); color: white; }
+  .day-header.gold { background: #b45309; color: white; }
+  .day-header.teal { background: var(--teal); color: white; }
+  .day-header.purple { background: var(--purple); color: white; }
+  .day-header.green { background: #15803d; color: white; }
+  .day-header.slate { background: #475569; color: white; }
+  .day-name { font-size: 18px; font-weight: 800; line-height: 1.1; }
+  .day-date { font-size: 12px; opacity: 0.8; margin-top: 2px; }
+  .day-dress {
+    font-size: 11px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 6px;
+    padding: 4px 10px;
+    white-space: nowrap;
+    align-self: center;
+  }
+  .day-body { padding: 0; }
+  .event-row {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--border);
+    min-height: 44px;
+  }
+  .event-row:last-child { border-bottom: none; }
+  .event-time {
+    width: 88px;
+    flex-shrink: 0;
+    padding: 10px 14px;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--gray);
+    border-right: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    background: var(--light-gray);
+    line-height: 1.3;
+  }
+  .event-content {
+    flex: 1;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .event-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .dot-navy { background: var(--navy); }
+  .dot-red { background: var(--red); }
+  .dot-gold { background: var(--gold); }
+  .dot-green { background: var(--green); }
+  .dot-purple { background: var(--purple); }
+  .dot-teal { background: var(--teal); }
+  .dot-gray { background: var(--gray); }
+  .dot-pink { background: #db2777; }
+  .event-text { font-size: 13px; color: #1f2937; line-height: 1.4; flex: 1; }
+  .event-text strong { font-weight: 600; }
+  .event-badge {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .badge-competition { background: #dbeafe; color: #1d4ed8; }
+  .badge-group { background: #dcfce7; color: #15803d; }
+  .badge-state { background: #ede9fe; color: #6d28d9; }
+  .badge-travel { background: #fee2e2; color: #b91c1c; }
+  .badge-fun { background: #fef9c3; color: #854d0e; }
+  .badge-ceremony { background: #fce7f3; color: #9d174d; }
+  .badge-payment { background: #ffedd5; color: #c2410c; }
+
+  /* free time highlight */
+  .event-row.free-time { background: #f0fdf4; }
+  .event-row.free-time .event-time { background: #dcfce7; }
+
+  /* ── COMPETITION INFO CARDS ── */
+  .comp-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .comp-card {
+    background: white;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .comp-card-header {
+    padding: 12px 16px;
+    font-weight: 700;
+    font-size: 13px;
+    color: white;
+  }
+  .comp-card-header.et { background: #1d4ed8; }
+  .comp-card-header.eng { background: #6d28d9; }
+  .comp-card-header.td { background: #0f766e; }
+  .comp-card-header.occ { background: #b91c1c; }
+  .comp-card-body { padding: 12px 16px; }
+  .comp-detail { font-size: 12.5px; color: #374151; margin-bottom: 6px; display: flex; gap: 6px; }
+  .comp-detail-label { font-weight: 600; color: var(--gray); min-width: 70px; }
+
+  /* ── PACKING / NOTES ── */
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  @media(max-width: 580px) { .info-grid { grid-template-columns: 1fr; } }
+  .info-card {
+    background: white;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    padding: 16px 18px;
+  }
+  .info-card-title {
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--navy);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .info-list { list-style: none; }
+  .info-list li {
+    font-size: 13px;
+    color: #374151;
+    padding: 4px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .info-list li:last-child { border-bottom: none; }
+  .info-list li::before { content: '·'; color: var(--navy); font-weight: 900; flex-shrink: 0; }
+
+  /* ── AQUARIUM SPECIAL CARD ── */
+  .aquarium-card {
+    background: linear-gradient(135deg, #0c4a6e, #075985);
+    color: white;
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .aquarium-card::after {
+    content: '🐠';
+    position: absolute;
+    right: 20px; top: 50%;
+    transform: translateY(-50%);
+    font-size: 48px;
+    opacity: 0.3;
+  }
+  .aquarium-title { font-size: 16px; font-weight: 800; margin-bottom: 6px; }
+  .aquarium-sub { font-size: 12.5px; opacity: 0.85; margin-bottom: 12px; }
+  .aquarium-details { display: flex; gap: 16px; flex-wrap: wrap; }
+  .aquarium-detail { font-size: 12.5px; }
+  .aquarium-detail strong { display: block; font-size: 14px; font-weight: 700; }
+  .aquarium-note {
+    margin-top: 12px;
+    background: rgba(255,255,255,0.12);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 12.5px;
+    line-height: 1.5;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 11.5px;
+    color: var(--gray);
+    border-top: 1px solid var(--border);
+    margin-top: 8px;
+  }
+  .footer strong { color: var(--navy); }
+
+  /* ── ROLE PICKER ── */
+  .role-overlay {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg, #0d1b3e 0%, #1a2d5a 60%, #0d1b3e 100%);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .role-overlay.hidden { display: none; }
+  .role-box {
+    background: white;
+    border-radius: 20px;
+    padding: 36px 32px;
+    max-width: 480px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.4);
+  }
+  .role-logo {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  .role-logo-badge {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 4px;
+  }
+  .role-logo-badge.r { background: #c8102e; color: white; }
+  .role-logo-badge.b { background: #1a2d5a; color: white; }
+  .role-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: #1a2d5a;
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+  .role-sub {
+    font-size: 13px;
+    color: #6b7280;
+    margin-bottom: 28px;
+  }
+  .role-prompt {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #374151;
+    margin-bottom: 14px;
+  }
+  .role-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .role-card {
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 16px 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    text-align: left;
+    transition: all 0.15s ease;
+    background: white;
+    width: 100%;
+  }
+  .role-card:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+  .role-card.competitor:hover { border-color: #1d4ed8; background: #eff6ff; }
+  .role-card.officer:hover { border-color: #7c3aed; background: #f5f3ff; }
+  .role-card.advisor:hover { border-color: #c8102e; background: #fff1f2; }
+  .role-icon {
+    font-size: 28px;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .role-card.competitor .role-icon { background: #dbeafe; }
+  .role-card.officer .role-icon { background: #ede9fe; }
+  .role-card.advisor .role-icon { background: #fee2e2; }
+  .role-card-title { font-size: 15px; font-weight: 700; color: #111827; }
+  .role-card-desc { font-size: 12px; color: #6b7280; margin-top: 2px; }
+
+  /* ── ROLE FILTERING ── */
+  /* by default show everything */
+  [data-role] { display: flex; }
+
+  /* competitor hides advisor/officer-only items */
+  body.role-competitor [data-role="officer"],
+  body.role-competitor [data-role="advisor"],
+  body.role-competitor [data-role="officer-advisor"] { display: none !important; }
+
+  /* officer hides advisor-only items */
+  body.role-officer [data-role="advisor"] { display: none !important; }
+
+  /* advisor sees all - nothing hidden */
+
+  /* role pill on header */
+  .active-role-pill {
+    display: none;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    border: 1px solid rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.12);
+    color: white;
+    margin-top: 14px;
+    transition: background 0.15s;
+  }
+  .active-role-pill:hover { background: rgba(255,255,255,0.22); }
+  .active-role-pill.visible { display: inline-flex; }
+</style>
+</head>
+<body>
+
+<!-- ══ ROLE PICKER OVERLAY ══ -->
+<div class="role-overlay" id="roleOverlay">
+  <div class="role-box">
+    <div class="role-logo">
+      <span class="role-logo-badge r">SkillsUSA NLSC 2026</span>
+      <span class="role-logo-badge b">CTEA — NYS</span>
+    </div>
+    <div class="role-title">Atlanta Trip Guide</div>
+    <div class="role-sub">HS for Construction Trades, Engineering &amp; Architecture</div>
+    <div class="role-prompt">Who are you?</div>
+    <div class="role-cards">
+      <button class="role-card competitor" onclick="selectRole('competitor')">
+        <div class="role-icon">🏆</div>
+        <div>
+          <div class="role-card-title">Competitor</div>
+          <div class="role-card-desc">I'm competing at nationals (Electronics, Engineering, Technical Drafting, or Ceremonies)</div>
+        </div>
+      </button>
+      <button class="role-card officer" onclick="selectRole('officer')">
+        <div class="role-icon">⭐</div>
+        <div>
+          <div class="role-card-title">State Officer / Delegate</div>
+          <div class="role-card-desc">I'm a NYS SkillsUSA state officer or delegate attending conference sessions</div>
+        </div>
+      </button>
+      <button class="role-card advisor" onclick="selectRole('advisor')">
+        <div class="role-icon">👨‍🏫</div>
+        <div>
+          <div class="role-card-title">Advisor / Chaperone</div>
+          <div class="role-card-desc">I'm a teacher, advisor, or chaperone accompanying the group</div>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ HEADER ══ -->
+<div class="header">
+  <div class="header-inner">
+    <div class="header-top">
+      <span class="skillsusa-badge">SkillsUSA NLSC 2026</span>
+      <span class="ctea-badge">CTEA — NYS</span>
+    </div>
+    <h1>Champion Your Future<br><span>Atlanta, Georgia</span></h1>
+    <p class="header-sub">National Leadership &amp; Skills Conference · June 1–5, 2026</p>
+    <button class="active-role-pill" id="rolePill" onclick="switchRole()"></button>
+    <div class="header-meta">
+      <div class="meta-item"><div class="meta-icon">✈️</div> LGA → ATL &amp; back</div>
+      <div class="meta-item"><div class="meta-icon">📅</div> June 1–6, 2026</div>
+      <div class="meta-item"><div class="meta-icon">🏨</div> Marriott Marquis, Atlanta</div>
+      <div class="meta-item"><div class="meta-icon">🏆</div> 3 Competitions</div>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- ══ IMPORTANT NOTICES ══ -->
+  <div class="alert alert-gold">
+    <div class="alert-icon">☂️</div>
+    <div class="alert-content">
+      <div class="alert-title">Weather Advisory — Pack a Compact Umbrella!</div>
+      <div class="alert-body">It has been pouring in Atlanta. If it rains Monday or Tuesday (and if the weather changes) while you're outside, you will get drenched without one. A small, packable umbrella is strongly recommended.</div>
+    </div>
+  </div>
+
+  <div class="alert alert-red">
+    <div class="alert-icon">📋</div>
+    <div class="alert-content">
+      <div class="alert-title">Schedule is a Draft — Subject to Change</div>
+      <div class="alert-body">All times are tentative. Check the official NLSC App for updates throughout the week.</div>
+    </div>
+  </div>
+
+  <div class="alert alert-blue">
+    <div class="alert-icon">🏨</div>
+    <div class="alert-content">
+      <div class="alert-title">Hotel — Marriott Marquis Atlanta</div>
+      <div class="alert-body">265 Peachtree Center Avenue, Atlanta, GA 30303 · <strong>404-521-0000</strong><br>Trip Coordinator: Matthew DiMella — mdimell@schools.nyc.gov</div>
+    </div>
+  </div>
+
+  <!-- ══ PAYMENTS ══ -->
+  <div class="section-title">💳 Payments Due</div>
+  <div class="payments-box">
+    <div class="payments-header">💰 Each Person Owes $125 Total</div>
+    <div class="payments-body">
+      <div class="payment-row">
+        <span class="payment-label">🍽️ Wednesday Chapter Dinner</span>
+        <span class="payment-amount">$100</span>
+      </div>
+      <div class="payment-row">
+        <span class="payment-label">🚐 Saturday Van (Hotel → Airport)</span>
+        <span class="payment-amount">$25</span>
+      </div>
+      <div class="payment-total-row">
+        <span class="payment-total-label">Total per person</span>
+        <span class="payment-total-amount">$125</span>
+      </div>
+      <div class="payment-methods">
+        <span class="method-pill">💵 Cash</span>
+        <span class="method-pill">📱 Venmo</span>
+        <span class="method-pill">💸 Zelle</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ GEORGIA AQUARIUM ══ -->
+  <div class="section-title">🐬 Group Activity</div>
+  <div class="aquarium-card">
+    <div class="aquarium-title">🐠 Georgia Aquarium — Friday, June 5</div>
+    <div class="aquarium-sub">With Florence! (World's largest aquarium)</div>
+    <div class="aquarium-details">
+      <div class="aquarium-detail"><strong>10:00 AM – 1:00 PM</strong>Time</div>
+      <div class="aquarium-detail"><strong>~$45/person</strong>Ticket Cost</div>
+      <div class="aquarium-detail"><strong>Thumbs up 👍</strong>to RSVP</div>
+    </div>
+    <div class="aquarium-note">Tickets will be purchased in advance. You can pay back after. Located at 225 Baker St NW — about a 10-minute drive from the GWCC. This is during your free time block (8AM–4PM) before the Closing Ceremony.</div>
+  </div>
+
+  <!-- ══ FLIGHTS ══ -->
+  <div class="section-title">✈️ Flights</div>
+  <div class="flights-grid">
+    <div class="flight-card outbound">
+      <div class="flight-tag out">▲ Outbound Flight</div>
+      <div class="flight-route">
+        <div>
+          <div class="airport">LGA</div>
+          <div class="flight-detail">New York LaGuardia</div>
+        </div>
+        <div class="flight-arrow">→</div>
+        <div>
+          <div class="airport">ATL</div>
+          <div class="flight-detail">Atlanta Hartsfield</div>
+        </div>
+      </div>
+      <div class="flight-times">
+        <div class="time-block">
+          <div class="time-big">11:59 AM</div>
+          <div class="time-label">Departs · Terminal C</div>
+        </div>
+        <div class="time-block">
+          <div class="time-big">2:24 PM</div>
+          <div class="time-label">Arrives · South Terminal</div>
+        </div>
+      </div>
+      <div class="flight-num">Delta DL 0990 · Mon Jun 1 · 2h 25m · A321 · Status: Confirmed</div>
+    </div>
+    <div class="flight-card return">
+      <div class="flight-tag ret">▼ Return Flight</div>
+      <div class="flight-route">
+        <div>
+          <div class="airport">ATL</div>
+          <div class="flight-detail">Atlanta Hartsfield</div>
+        </div>
+        <div class="flight-arrow">→</div>
+        <div>
+          <div class="airport">LGA</div>
+          <div class="flight-detail">New York LaGuardia</div>
+        </div>
+      </div>
+      <div class="flight-times">
+        <div class="time-block">
+          <div class="time-big">7:30 AM</div>
+          <div class="time-label">Departs · South Terminal</div>
+        </div>
+        <div class="time-block">
+          <div class="time-big">9:45 AM</div>
+          <div class="time-label">Arrives · Terminal C</div>
+        </div>
+      </div>
+      <div class="flight-num">Delta DL 0323 · Sat Jun 6 · 2h 15m · A321 · Status: Confirmed</div>
+    </div>
+  </div>
+  <div class="alert alert-blue">
+    <div class="alert-icon">🚐</div>
+    <div class="alert-content">
+      <div class="alert-title">Saturday Morning — Hotel to Airport Van</div>
+      <div class="alert-body">Transportation is booked! You must be ready <strong>early</strong> — with a 7:30 AM departure, plan to leave the hotel by at least 5:30–6:00 AM. Cost is <strong>$25/person</strong> (included in the $125 total).</div>
+    </div>
+  </div>
+
+  <div class="alert alert-blue">
+    <div class="alert-icon">⏰</div>
+    <div class="alert-content">
+      <div class="alert-title">Monday Departure — Students Must Be at LGA by 9:30 AM</div>
+      <div class="alert-body">All students must arrive at <strong>LGA Terminal C by 9:30 AM</strong> on Monday, June 1. Flight DL 0990 departs at 11:59 AM — this allows time for check-in, baggage, and security.</div>
+    </div>
+  </div>
+
+  <!-- ══ DAY-BY-DAY TIMELINE ══ -->
+  <div class="section-title">📅 Day-by-Day Timeline</div>
+
+  <!-- MONDAY JUNE 1 -->
+  <div class="day-block">
+    <div class="day-header teal">
+      <div>
+        <div class="day-name">Monday, June 1</div>
+        <div class="day-date">Conference Day 1 — Arrival Day</div>
+      </div>
+      <div class="day-dress">👕 Leverage Shirt + Jeans/Khakis</div>
+    </div>
+    <div class="day-body">
+      <div class="event-row">
+        <div class="event-time">9:30 AM</div>
+        <div class="event-content"><div class="event-dot dot-gold"></div><div class="event-text">⏰ <strong>Students arrive LGA Terminal C</strong> — meet the group here</div><span class="event-badge badge-travel">Meet-Up</span></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">11:59 AM</div>
+        <div class="event-content"><div class="event-dot dot-red"></div><div class="event-text">✈️ <strong>Flight DL 0990 departs LGA</strong> (Terminal C)</div><span class="event-badge badge-travel">Travel</span></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">2:24 PM</div>
+        <div class="event-content"><div class="event-dot dot-green"></div><div class="event-text">✈️ <strong>Arrive Atlanta (ATL)</strong> — South Terminal</div><span class="event-badge badge-travel">Travel</span></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">1:00–6:00 PM</div>
+        <div class="event-content"><div class="event-dot dot-gold"></div><div class="event-text">🛍️ <strong>SkillsUSA Store Grand Opening</strong> — also State Meeting (by state assoc.)</div></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">5:30–6:00 PM</div>
+        <div class="event-content"><div class="event-dot dot-purple"></div><div class="event-text">Prepare for NYS Delegation Greeting</div><span class="event-badge badge-state">State Officers</span></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">6:00 PM</div>
+        <div class="event-content"><div class="event-dot dot-purple"></div><div class="event-text"><strong>NYS Delegation Greeting</strong></div><span class="event-badge badge-state">State Officers</span></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">6:00–8:30 PM</div>
+        <div class="event-content"><div class="event-dot dot-navy"></div><div class="event-text">State Officer Greeting Activity in dining area</div><span class="event-badge badge-state">State Officers</span></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">9:00 PM</div>
+        <div class="event-content"><div class="event-dot dot-navy"></div><div class="event-text">Team Meeting — Officers &amp; Advisors</div></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">11:00 PM</div>
+        <div class="event-content"><div class="event-dot dot-red"></div><div class="event-text">🌙 <strong>Curfew</strong></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TUESDAY JUNE 2 -->
+  <div class="day-block">
+    <div class="day-header navy">
+      <div>
+        <div class="day-name">Tuesday, June 2</div>
+        <div class="day-date">Conference Day 2 — Championships Begin · Opening Ceremony</div>
+      </div>
+      <div class="day-dress">👔 Blue + Khaki/Grey Pants</div>
+    </div>
+    <div class="day-body">
+      <div class="event-row">
+        <div class="event-time">7:30–8:00 AM</div>
+        <div class="event-content"><div class="event-dot dot-gray"></div><div class="event-text">Breakfast on own</div></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">7:30 AM–5 PM</div>
+        <div class="event-content"><div class="event-dot dot-gold"></div><div class="event-text">🛍️ SkillsUSA Store Open</div></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">8:00 AM–5:30 PM</div>
+        <div class="event-content"><div class="event-dot dot-red"></div><div class="event-text">🏆 <strong>SkillsUSA Championships</strong> — Competition Day</div><span class="event-badge badge-competition">Competition</span></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">8:00 AM–5:30 PM</div>
+        <div class="event-content"><div class="event-dot dot-teal"></div><div class="event-text">🖥️ SkillsUSA TECHSPO Open</div></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">8:30 AM</div>
+        <div class="event-content"><div class="event-dot dot-purple"></div><div class="event-text">Delegate Check-In</div><span class="event-badge badge-state">State Officers</span></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">9:00 AM–4:00 PM</div>
+        <div class="event-content"><div class="event-dot dot-navy"></div><div class="event-text">SkillsUSA LEARN Open · Delegate Session 9–12 PM</div></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">10:30 AM–12:00 PM</div>
+        <div class="event-content"><div class="event-dot dot-purple"></div><div class="event-text">Parliamentary Procedure Training</div><span class="event-badge badge-state">State Officers</span></div>
+      </div>
+      <div class="event-row free-time">
+        <div class="event-time">2:00–5:30 PM</div>
+        <div class="event-content"><div class="event-dot dot-green"></div><div class="event-text">🟢 <strong>Free Time — Electronics Technology</strong> competitors</div><span class="event-badge badge-competition">Free Time</span></div>
+      </div>
+      <div class="event-row free-time">
+        <div class="event-time">3:00–5:30 PM</div>
+        <div class="event-content"><div class="event-dot dot-green"></div><div class="event-text">🟢 <strong>Free Time — Engineering Technology</strong> competitors</div><span class="event-badge badge-competition">Free Time</span></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">1:30–3:30 PM</div>
+        <div class="event-content"><div class="event-dot dot-purple"></div><div class="event-text">Delegate Training</div><span class="event-badge badge-state">State Officers</span></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">5:00 PM</div>
+        <div class="event-content"><div class="event-dot dot-pink"></div><div class="event-text">🎭 Change into <strong>SkillsUSA Official Attire</strong> for Opening Ceremony</div></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">5:30 PM</div>
+        <div class="event-content"><div class="event-dot dot-pink"></div><div class="event-text">🚪 Doors Open for Opening Session</div><span class="event-badge badge-ceremony">Ceremony</span></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">6:25–7:00 PM</div>
+        <div class="event-content"><div class="event-dot dot-pink"></div><div class="event-text">Pre-Session Opening</div><span class="event-badge badge-ceremony">Ceremony</span></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">7:00–8:30 PM</div>
+        <div class="event-content"><div class="event-dot dot-red"></div><div class="event-text">🎉 <strong>Opening Ceremony</strong></div><span class="event-badge badge-ceremony">Ceremony</span></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">11:00 PM</div>
+        <div class="event-content"><div class="event-dot dot-red"></div><div class="event-text">🌙 <strong>Curfew</strong></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEDNESDAY JUNE 3 -->
+  <div class="day-block">
+    <div class="day-header gold">
+      <div>
+        <div class="day-name">Wednesday, June 3</div>
+        <div class="day-date">Conference Day 3 — Delegate Day · Chapter Dinner</div>
+      </div>
+      <div class="day-dress">🎽 Official SkillsUSA Attire</div>
+    </div>
+    <div class="day-body">
+      <div class="event-row">
+        <div class="event-time">7:30 AM–5 PM</div>
+        <div class="event-content"><div class="event-dot dot-gold"></div><div class="event-text">🛍️ SkillsUSA Store Open</div></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">7:30–9:30 AM</div>
+        <div class="event-content"><div class="event-dot dot-purple"></div><div class="event-text">Call to Action: Advisor's Session</div></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">7:30 AM–5:30 PM</div>
+        <div class="event-content"><div class="event-dot dot-red"></div><div class="event-text">🏆 <strong>SkillsUSA Championships</strong> — Competition Day</div><span class="event-badge badge-competition">Competition</span></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">8:00 AM</div>
+        <div class="event-content"><div class="event-dot dot-gray"></div><div class="event-text">Breakfast on own</div></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">8:00 AM–5:30 PM</div>
+        <div class="event-content"><div class="event-dot dot-teal"></div><div class="event-text">🖥️ SkillsUSA TECHSPO Open</div></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">9:00–10:00 AM</div>
+        <div class="event-content"><div class="event-dot dot-navy"></div><div class="event-text">Meet the Candidates</div><span class="event-badge badge-state">State Officers</span></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">10:30 AM–12:00 PM</div>
+        <div class="event-content"><div class="event-dot dot-purple"></div><div class="event-text">High School Delegate Meeting</div><span class="event-badge badge-state">State Officers</span></div>
+      </div>
+      <div class="event-row" style="background:#fff7ed;">
+        <div class="event-time" style="background:#ffedd5;">10:30 AM</div>
+        <div class="event-content"><div class="event-dot" style="background:#ea580c;"></div><div class="event-text">📝 <strong>NOCTI Cert Test — Principles of CTE Administration (Level 1)</strong><br><span style="font-size:11.5px;color:#6b7280;">Mr. Gaffoor &amp; Mr. Hossain · Bring own laptop · Proctored · No outside resources</span></div><span class="event-badge" style="background:#ffedd5;color:#c2410c;">NOCTI</span></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">12:30–1:30 PM</div>
+        <div class="event-content"><div class="event-dot dot-purple"></div><div class="event-text">Delegate Lunch &amp; Meeting with Mrs. P, Chef Z</div><span class="event-badge badge-state">State Officers</span></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">1:00–4:00 PM</div>
+        <div class="event-content"><div class="event-dot dot-teal"></div><div class="event-text">SkillsUSA LEARN</div></div>
+      </div>
+      <div class="event-row" style="background:#fff7ed;">
+        <div class="event-time" style="background:#ffedd5;">2:30 PM</div>
+        <div class="event-content"><div class="event-dot" style="background:#ea580c;"></div><div class="event-text">📝 <strong>NOCTI Cert Test — Principles of CTE Administration (Level 2)</strong><br><span style="font-size:11.5px;color:#6b7280;">Mr. Gaffoor &amp; Mr. Hossain · Bring own laptop · Proctored · No outside resources</span></div><span class="event-badge" style="background:#ffedd5;color:#c2410c;">NOCTI</span></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">1:30–3:30 PM</div>
+        <div class="event-content"><div class="event-dot dot-teal"></div><div class="event-text">TECHSPO Exploration</div></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">Evening</div>
+        <div class="event-content"><div class="event-dot dot-gold"></div><div class="event-text">🍽️ <strong>Chapter Dinner</strong> — Booked! (<em>Limited free time this evening</em>)</div><span class="event-badge badge-payment">$100/person</span></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">11:00 PM</div>
+        <div class="event-content"><div class="event-dot dot-red"></div><div class="event-text">🌙 <strong>Curfew</strong></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- THURSDAY JUNE 4 -->
+  <div class="day-block">
+    <div class="day-header purple">
+      <div>
+        <div class="day-name">Thursday, June 4</div>
+        <div class="day-date">Conference Day 4 — Champions Festival Night</div>
+      </div>
+      <div class="day-dress">👔 Black Polo + Khaki/Grey</div>
+    </div>
+    <div class="day-body">
+      <div class="event-row">
+        <div class="event-time">7:30 AM–2 PM</div>
+        <div class="event-content"><div class="event-dot dot-gold"></div><div class="event-text">🛍️ SkillsUSA Store Open</div></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">7:30 AM–5 PM</div>
+        <div class="event-content"><div class="event-dot dot-red"></div><div class="event-text">🏆 <strong>SkillsUSA Championships</strong> — Competition Day</div><span class="event-badge badge-competition">Competition</span></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">8:00 AM</div>
+        <div class="event-content"><div class="event-dot dot-gray"></div><div class="event-text">Breakfast on own</div></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">8:00 AM–5 PM</div>
+        <div class="event-content"><div class="event-dot dot-teal"></div><div class="event-text">🖥️ SkillsUSA TECHSPO Open</div></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">9:00–10:00 AM</div>
+        <div class="event-content"><div class="event-dot dot-navy"></div><div class="event-text">Meet the Candidates</div><span class="event-badge badge-state">State Officers</span></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">9:00 AM–4 PM</div>
+        <div class="event-content"><div class="event-dot dot-teal"></div><div class="event-text">SkillsUSA LEARN</div></div>
+      </div>
+      <div class="event-row" style="background:#fff7ed;">
+        <div class="event-time" style="background:#ffedd5;">10:30 AM</div>
+        <div class="event-content"><div class="event-dot" style="background:#ea580c;"></div><div class="event-text">📝 <strong>NOCTI Cert Test — Principles of Work-Based Learning (Level 1)</strong><br><span style="font-size:11.5px;color:#6b7280;">Mr. Gaffoor &amp; Mr. Hossain · Bring own laptop · Proctored · No outside resources</span></div><span class="event-badge" style="background:#ffedd5;color:#c2410c;">NOCTI</span></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">10:30 AM–12 PM</div>
+        <div class="event-content"><div class="event-dot dot-purple"></div><div class="event-text">HS Committee Meetings — Group A</div><span class="event-badge badge-state">State Officers</span></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">12:00–1:30 PM</div>
+        <div class="event-content"><div class="event-dot dot-gray"></div><div class="event-text">Lunch on own with Advisor/School</div></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">1:30–3:00 PM</div>
+        <div class="event-content"><div class="event-dot dot-purple"></div><div class="event-text">HS Committee Meetings — Group B</div><span class="event-badge badge-state">State Officers</span></div>
+      </div>
+      <div class="event-row free-time">
+        <div class="event-time">5:00 PM – Evening</div>
+        <div class="event-content"><div class="event-dot dot-green"></div><div class="event-text">🟢 <strong>Free Time</strong></div><span class="event-badge badge-group">Free Time</span></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">6:00–9:30 PM</div>
+        <div class="event-content"><div class="event-dot dot-gold"></div><div class="event-text">🎆 <strong>SkillsUSA Champions Festival</strong> — Centennial Olympic Park</div><span class="event-badge badge-fun">NYS Shirt</span></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">11:00 PM</div>
+        <div class="event-content"><div class="event-dot dot-red"></div><div class="event-text">🌙 <strong>Curfew</strong></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FRIDAY JUNE 5 -->
+  <div class="day-block">
+    <div class="day-header green">
+      <div>
+        <div class="day-name">Friday, June 5</div>
+        <div class="day-date">Conference Day 5 — Aquarium · Closing Ceremony</div>
+      </div>
+      <div class="day-dress">🎽 Official SkillsUSA Attire</div>
+    </div>
+    <div class="day-body">
+      <div class="event-row">
+        <div class="event-time">8:00 AM</div>
+        <div class="event-content"><div class="event-dot dot-gray"></div><div class="event-text">Breakfast on own</div></div>
+      </div>
+      <div class="event-row free-time">
+        <div class="event-time">8:00 AM–4:00 PM</div>
+        <div class="event-content"><div class="event-dot dot-green"></div><div class="event-text">🟢 <strong>Free Time Block</strong> (largest of the trip!)</div><span class="event-badge badge-group">Free Time</span></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">9:00 AM–12:00 PM</div>
+        <div class="event-content"><div class="event-dot dot-teal"></div><div class="event-text">Community Service Project (National Conference)</div></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">9:00–10:00 AM</div>
+        <div class="event-content"><div class="event-dot dot-purple"></div><div class="event-text">HS Delegates Meeting</div><span class="event-badge badge-state">State Officers</span></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">10:00 AM–1:00 PM</div>
+        <div class="event-content"><div class="event-dot dot-teal"></div><div class="event-text">🐠 <strong>Georgia Aquarium</strong> — with Florence! (225 Baker St NW)</div><span class="event-badge badge-fun">$45 / RSVP 👍</span></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">10:30–11:30 AM</div>
+        <div class="event-content"><div class="event-dot dot-purple"></div><div class="event-text">Meet the Candidates + Voting</div><span class="event-badge badge-state">State Officers</span></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">Afternoon</div>
+        <div class="event-content"><div class="event-dot dot-gray"></div><div class="event-text">Dinner on own with Advisor/School</div></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">3:00–4:00 PM</div>
+        <div class="event-content"><div class="event-dot dot-pink"></div><div class="event-text">🚪 Doors Open for <strong>Closing Ceremony</strong> — Change into SkillsUSA Official Attire (Everyone)</div><span class="event-badge badge-ceremony">Ceremony</span></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">4:00–8:00 PM</div>
+        <div class="event-content"><div class="event-dot dot-red"></div><div class="event-text">🏆 <strong>Closing Ceremony &amp; Awards Session</strong></div><span class="event-badge badge-ceremony">Ceremony</span></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">After 8:00 PM</div>
+        <div class="event-content"><div class="event-dot dot-gold"></div><div class="event-text">🌮 <strong>NYS Taco Dinner</strong> (following Closing Ceremony)</div><span class="event-badge badge-group">Group</span></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">11:00 PM</div>
+        <div class="event-content"><div class="event-dot dot-red"></div><div class="event-text">🌙 <strong>Curfew</strong></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SATURDAY JUNE 6 -->
+  <div class="day-block">
+    <div class="day-header slate">
+      <div>
+        <div class="day-name">Saturday, June 6</div>
+        <div class="day-date">Departure Day — Safe Travel Home!</div>
+      </div>
+      <div class="day-dress">👟 Comfortable Travel Clothes</div>
+    </div>
+    <div class="day-body">
+      <div class="event-row">
+        <div class="event-time">~5:30–6:00 AM</div>
+        <div class="event-content"><div class="event-dot dot-gold"></div><div class="event-text">⏰ Wake up — finish packing, head to lobby</div></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">Early AM</div>
+        <div class="event-content"><div class="event-dot dot-navy"></div><div class="event-text">🚐 <strong>Van departs Hotel → ATL Airport</strong> (booked!)</div><span class="event-badge badge-payment">$25/person</span></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">7:30 AM</div>
+        <div class="event-content"><div class="event-dot dot-red"></div><div class="event-text">✈️ <strong>Flight DL 0323 departs ATL</strong> (South Terminal)</div><span class="event-badge badge-travel">Travel</span></div>
+      </div>
+      <div class="event-row">
+        <div class="event-time">9:45 AM</div>
+        <div class="event-content"><div class="event-dot dot-green"></div><div class="event-text">🗽 <strong>Arrive New York LGA</strong> (Terminal C) — See you in July!</div><span class="event-badge badge-travel">Home</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ COMPETITION INFO ══ -->
+  <div class="section-title">🏆 Our Competitions</div>
+  <div class="comp-grid">
+    <div class="comp-card">
+      <div class="comp-card-header et">⚡ Electronics Technology</div>
+      <div class="comp-card-body">
+        <div class="comp-detail"><span class="comp-detail-label">Type:</span> Individual</div>
+        <div class="comp-detail"><span class="comp-detail-label">Uniform:</span> Class E — White SkillsUSA polo, black slacks, black closed-toe shoes</div>
+        <div class="comp-detail"><span class="comp-detail-label">Events:</span> CET knowledge test, customer service exam, circuit construction, soldering &amp; troubleshooting</div>
+        <div class="comp-detail"><span class="comp-detail-label">Free Time:</span> Tue 2:00–5:30 PM</div>
+        <div class="comp-detail"><span class="comp-detail-label">Bring:</span> Multimeter, oscilloscope, 2 probes, soldering iron (25W max), hand tools, calculator (non-programmable), resume (PDF)</div>
+        <div class="comp-detail"><span class="comp-detail-label">⚠️ Note:</span> No cell phones allowed in competition area</div>
+      </div>
+    </div>
+    <div class="comp-card">
+      <div class="comp-card-header eng">⚙️ Engineering Technology-Design</div>
+      <div class="comp-card-body">
+        <div class="comp-detail"><span class="comp-detail-label">Type:</span> Team of 3</div>
+        <div class="comp-detail"><span class="comp-detail-label">Uniform:</span> Class E — White SkillsUSA polo, black slacks, black closed-toe shoes</div>
+        <div class="comp-detail"><span class="comp-detail-label">Events:</span> 10-min oral presentation, design prototype review, engineering notebook, industrial review, on-site problem-solving</div>
+        <div class="comp-detail"><span class="comp-detail-label">Free Time:</span> Tue 3:00–5:30 PM</div>
+        <div class="comp-detail"><span class="comp-detail-label">Bring:</span> Design prototype, design board (max 36"×56" tri-fold), engineering notebook, laptop/tablet (fully charged), industrial review letter, resume (PDF)</div>
+        <div class="comp-detail"><span class="comp-detail-label">⚠️ Note:</span> Prototype must be set up during orientation</div>
+      </div>
+    </div>
+    <div class="comp-card">
+      <div class="comp-card-header td">📐 Technical Drafting</div>
+      <div class="comp-card-body">
+        <div class="comp-detail"><span class="comp-detail-label">Type:</span> Individual</div>
+        <div class="comp-detail"><span class="comp-detail-label">Uniform:</span> Class E — White SkillsUSA polo, black slacks, black closed-toe shoes</div>
+        <div class="comp-detail"><span class="comp-detail-label">Events:</span> Technical drafting knowledge test, 3D modeling &amp; 2D drawing extraction (CAD software of choice)</div>
+        <div class="comp-detail"><span class="comp-detail-label">Bring:</span> Laptop with CAD software (offline license!), sci. calculator, mechanical pencil, Machinery's Handbook + 4 refs, 6' surge protector, USB flash drive, resume (PDF)</div>
+        <div class="comp-detail"><span class="comp-detail-label">⚠️ Note:</span> No internet allowed. Submit drawings as PDFs on USB drive.</div>
+      </div>
+    </div>
+    <div class="comp-card">
+      <div class="comp-card-header occ">🎭 Opening &amp; Closing Ceremonies</div>
+      <div class="comp-card-body">
+        <div class="comp-detail"><span class="comp-detail-label">Type:</span> Team of 7</div>
+        <div class="comp-detail"><span class="comp-detail-label">Uniform:</span> Class A — Official SkillsUSA red blazer, white dress shirt + black tie, black slacks, black closed-toe shoes</div>
+        <div class="comp-detail"><span class="comp-detail-label">Roles:</span> President, VP, Parliamentarian, Reporter, Treasurer, Secretary, Historian</div>
+        <div class="comp-detail"><span class="comp-detail-label">Events:</span> Full opening &amp; closing ceremony script from memory, emblem assembly, pledges in unison</div>
+        <div class="comp-detail"><span class="comp-detail-label">Bring:</span> Resume (PDF), pencil &amp; paper (president brings to orientation)</div>
+        <div class="comp-detail"><span class="comp-detail-label">⚠️ Note:</span> Script must be performed exactly as written — memorized</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ WHAT TO PACK ══ -->
+  <div class="section-title">🧳 What to Pack</div>
+  <div class="info-grid">
+    <div class="info-card">
+      <div class="info-card-title">👔 Required Clothing</div>
+      <ul class="info-list">
+        <li>Official SkillsUSA white polo shirt (competition uniform)</li>
+        <li>Black dress slacks or knee-length skirt</li>
+        <li>Black closed-toe dress shoes</li>
+        <li>Official SkillsUSA red blazer (Ceremonies team)</li>
+        <li>White dress shirt + black tie (Ceremonies team)</li>
+        <li>Business casual outfits for delegate days</li>
+        <li>NYS SkillsUSA shirt + shorts/jeans (Champions Festival)</li>
+        <li>Comfortable travel clothes (Sat)</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <div class="info-card-title">🌦️ Essentials &amp; Tips</div>
+      <ul class="info-list">
+        <li><strong>☂️ Compact umbrella</strong> — it's been pouring in Atlanta!</li>
+        <li>Phone charger &amp; portable battery pack</li>
+        <li>Comfortable walking shoes (lots of time on your feet)</li>
+        <li>Water bottle — convention centers get warm</li>
+        <li>Snacks for long competition days</li>
+        <li>Cash for meals on own + extras</li>
+        <li>$125 payment for dinner + van (to your coordinator)</li>
+        <li>$45 for Georgia Aquarium (if you're joining!)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="alert alert-green">
+    <div class="alert-icon">💡</div>
+    <div class="alert-content">
+      <div class="alert-title">Tip: Explore the TECHSPO &amp; Conference Floor!</div>
+      <div class="alert-body">With any free time during the day, you are encouraged to explore the TECHSPO and the conference floor. It's a great way to see what's out there in industry and connect with professionals.</div>
+    </div>
+  </div>
+
+  <!-- ══ NEED TO KNOW ══ -->
+  <div class="section-title">📣 Need to Know</div>
+
+  <div class="alert alert-gold">
+    <div class="alert-icon">🏟️</div>
+    <div class="alert-content">
+      <div class="alert-title">General Sessions — State Farm Arena</div>
+      <div class="alert-body">
+        <strong>Tuesday Opening Session:</strong> Keynote speaker is <strong>Josef Newgarden</strong> — two-time Indy 500 champion and NTT IndyCar Series driver. Don't miss it!<br><br>
+        <strong>Friday Awards Session:</strong> Come-and-go format — check the app for your minute-by-minute recognition time. Be seated in a 100-level/floor seat <strong>15 minutes before</strong> your recognition time.<br><br>
+        <strong>⚠️ Arena Rules:</strong> No bags larger than <strong>14"×14"×6"</strong>. No water bottles or drinks of any kind. For fastest entry use <strong>Gates 1 and 2</strong>. State Farm Arena is a <strong>cashless facility</strong> — bring a debit/credit card.
+      </div>
+    </div>
+  </div>
+
+  <div class="alert alert-blue">
+    <div class="alert-icon">🚇</div>
+    <div class="alert-content">
+      <div class="alert-title">Getting Around Atlanta — MARTA</div>
+      <div class="alert-body">MARTA rapid transit runs <strong>directly from the airport to downtown</strong>. Go to the Domestic Terminal between North &amp; South baggage claims. Take the <strong>Red or Gold line to Peachtree Center</strong>. Buy a pass at the kiosk. Quick, affordable, easy.<br><br>
+        <strong>Airport Shuttle:</strong> SkillsUSA has partnered with DART transportation for discounted shuttles. Use promo code <strong>"SKILLS26"</strong> when booking online.</div>
+    </div>
+  </div>
+
+  <div class="alert alert-blue">
+    <div class="alert-icon">📱</div>
+    <div class="alert-content">
+      <div class="alert-title">Download the Official NLSC App</div>
+      <div class="alert-body">Search <strong>"NLSC 2025"</strong> in the App Store or Google Play. The app has the full schedule, maps, minute-by-minute Awards Session recognition times, Atlanta info, and more. Also check out <strong>Expedition NLSC</strong> in the app — a digital scavenger hunt where teams of 4 can win daily prizes and a VIP suite + $1,000 grand prize!</div>
+    </div>
+  </div>
+
+  <div class="alert alert-green">
+    <div class="alert-icon">🍽️</div>
+    <div class="alert-content">
+      <div class="alert-title">Food &amp; SkillsUSA Store</div>
+      <div class="alert-body">
+        <strong>Food:</strong> 200+ dining options within walking distance. GWCC has budget-friendly options. <strong>Both GWCC and State Farm Arena are cashless</strong> — bring a card.<br><br>
+        <strong>SkillsUSA Store</strong> (Registration Hall B): Grand Opening Mon 1–6 PM · Tue &amp; Wed 7:30 AM–5 PM · Thu 7:30 AM–2 PM. Glowsticks, apparel, drinkware, backpacks &amp; more. Need competition attire? Get it here!
+      </div>
+    </div>
+  </div>
+
+  <div class="alert alert-blue">
+    <div class="alert-icon">🎓</div>
+    <div class="alert-content">
+      <div class="alert-title">SkillsUSA LEARN — Professional Development</div>
+      <div class="alert-body">Open to both students and educators. Six tracks including Student Development, Student Credentialing, CTE Instructor Innovation, Advisor Development, and credentialing opportunities. Space is limited for credentials — register early!</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <strong>SkillsUSA NLSC 2026 — Atlanta, Georgia</strong><br>
+  NYS CTEA Delegation · June 1–5, 2026 · "Champion Your Future"<br>
+  Schedule subject to change. Verify all times before traveling. ✈️
+</div>
+
+<script>
+const roleLabels = {
+  competitor: { emoji: '🏆', label: 'Competitor', body: 'role-competitor' },
+  officer:    { emoji: '⭐', label: 'State Officer / Delegate', body: 'role-officer' },
+  advisor:    { emoji: '👨‍🏫', label: 'Advisor / Chaperone', body: 'role-advisor' }
+};
+
+// Auto-tag rows based on their badge content
+document.querySelectorAll('.event-row').forEach(row => {
+  if (row.querySelector('.badge-state')) {
+    row.setAttribute('data-role', 'officer-advisor');
+  }
+  // NOCTI rows have orange badge with text "NOCTI"
+  const badge = row.querySelector('.event-badge');
+  if (badge && badge.textContent.trim() === 'NOCTI') {
+    row.setAttribute('data-role', 'advisor');
+  }
+});
+
+// Also tag the NOCTI section cards if any
+document.querySelectorAll('[data-role]').forEach(el => {
+  // already tagged
+});
+
+function applyRoleCSS(role) {
+  document.querySelectorAll('[data-role]').forEach(el => {
+    const r = el.getAttribute('data-role');
+    let show = true;
+    if (role === 'competitor') {
+      show = (r !== 'officer' && r !== 'advisor' && r !== 'officer-advisor');
+    } else if (role === 'officer') {
+      show = (r !== 'advisor');
+    }
+    // advisor sees everything
+    el.style.display = show ? '' : 'none';
+  });
+}
+
+function selectRole(role) {
+  document.getElementById('roleOverlay').classList.add('hidden');
+  document.body.classList.remove('role-competitor', 'role-officer', 'role-advisor');
+  document.body.classList.add(roleLabels[role].body);
+  applyRoleCSS(role);
+  const pill = document.getElementById('rolePill');
+  pill.innerHTML = roleLabels[role].emoji + ' Viewing as: <strong>' + roleLabels[role].label + '</strong> &nbsp;·&nbsp; Switch';
+  pill.classList.add('visible');
+  sessionStorage.setItem('nlscRole', role);
+}
+
+function switchRole() {
+  document.body.classList.remove('role-competitor', 'role-officer', 'role-advisor');
+  // Reset all visibility
+  document.querySelectorAll('[data-role]').forEach(el => el.style.display = '');
+  document.getElementById('rolePill').classList.remove('visible');
+  document.getElementById('roleOverlay').classList.remove('hidden');
+  sessionStorage.removeItem('nlscRole');
+}
+
+const saved = sessionStorage.getItem('nlscRole');
+if (saved && roleLabels[saved]) selectRole(saved);
+</script>
+</body>
+</html>
